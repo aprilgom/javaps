@@ -1,0 +1,19 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+	public static void main(String[] args)throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		SortedSet<Integer> sq = new TreeSet<>();
+		for(int i = 0;i<n;i++){
+			sq[i] = Integer.parseInt(br.readLine());
+		}
+		int[] ret = Arrays.stream(sq)
+			.sorted()
+			.toArray();
+		for(int i:ret){
+			System.out.println(i);
+		}
+	}
+}
