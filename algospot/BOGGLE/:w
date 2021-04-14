@@ -1,0 +1,77 @@
+import java.util.*;
+import java.io.*;
+
+public class Main{
+	static char[][] map;
+	static boolean[][][] visited;
+	static String word;
+	static int[] dx = { 1, 1, 1, 0, 0,-1,-1,-1};
+	static int[] dy = { 1, 0,-1, 1,-1, 1, 0,-1};
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int C = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for(int c = 0;c<C;c++){
+
+			map = new char[5][5];
+			for(int i = 0;i<5;i++){
+				for(int j = 0;j<5;j++){
+					map[i][j] = (char)br.read();
+				}
+				br.read();
+			}
+
+			int N = Integer.parseInt(br.readLine());
+			for(int i = 0;i<N;i++){
+				word = br.readLine();
+				sb.append(word).append(" ");
+				if(isAvailable()){
+					sb.append("YES\n");
+				}else{
+					sb.append("NO\n");
+				}
+			}
+
+		}
+		System.out.println(sb);
+	}
+	static boolean isAvailable(){
+		visited = new boolean[5][5][10];
+		for(int y = 0;y<5;y++){
+			for(int x = 0;x<5;x++){
+				if(word.charAt(0) == map[y][x]){
+					if(sol(y,x,0)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	static boolean sol(int y,int x,String w,int n){
+		if(y<0 || y>=5 || x<0 || x>=5){
+			return false;
+		}
+		if(visited[y][x][n]){
+			return false;
+		}
+		visited[y][x][n] = true;
+
+		if(map[y][x] != w.charAt(0)){
+			return false;
+		}
+
+		if(n == word.length()-1){
+			return true;
+		}
+		for(int i = 0;i<8;i++){
+			int ty = y + dy[i];
+			int tx = x + dx[i];
+			int tn = n+1;
+			if(sol(ty,tx,tn)){
+				return true;
+			}
+		}
+		return false;
+	}
+}
